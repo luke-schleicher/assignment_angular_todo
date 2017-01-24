@@ -6,6 +6,7 @@ todoApp.controller('TodoCtrl',
     $scope.items = [{ description: "Get groceries from the store",
                     dueDate: new Date(),
                     completed: false }];
+    $scope.notFiltering = true
 
     $scope.createTodo = function() {
       $scope.newItem.id = $scope.id;
@@ -31,6 +32,10 @@ todoApp.controller('TodoCtrl',
           break;
         }
       }
+    }
+
+    $scope.toggleShowCompleted = function(){
+      $scope.notFiltering = !$scope.notFiltering
     }
 
     $scope.clearCompleted = function() {
