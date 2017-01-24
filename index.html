@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angular Todo App</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/stylesheet.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -11,27 +11,34 @@
   </head>
   <body ng-cloak>
 
-    <div class="container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <form class="form-group">
+            <input type="text" ng-model="newItem.description" class="form-control" placeholder="Item description">
+            <input type="date" ng-model="newItem.dueDate" class="form-control">
+            <button ng-click="createTodo()" class="btn btn-primary">Create Todo</button>
+          </form>
 
-      <form>
-        <input type="text" ng-model="newItem.description">
-        <input type="date" ng-model="newItem.dueDate">
-        <button ng-click="createTodo()">Create Todo</button>
-      </form>
-    
-      <table class="table table-striped">
-        <tr>
-          <th>Task</th>
-          <th>Due Date</th>
-          <th>Completed?</th>
-        </tr>
-        <tr ng-repeat="item in items">
-          <td>{{ item.text }}</td>
-          <td>{{ item.dueDate | date }}</td>
-          <td>{{ item.completed }}</td>
-        </tr>
-      </table>      
-    
+          <table class="table table-striped">
+            <tr>
+              <th>Task</th>
+              <th>Due Date</th>
+              <th>Completed?</th>
+              <th>Delete Item</th>
+            </tr>
+            <tr ng-repeat="item in items | filter:completedFilter" data-item-id="{{ item.id }}">
+              <td>{{ item.description }}</td>
+              <td>{{ item.dueDate | date }}</td>
+              <td><input type="checkbox" ng-checked="item.completed" ng-click="toggleCompleted(item.id)"></td>
+              <td><a ng-click="deleteItem(item.id)">X</a></td>
+            </tr>
+          </table>
+          <button type="button" class="btn btn-primary" ng-click="clearCompleted()">Delete completed items</button>
+          <button type="button" class="btn btn-primary" ng-click="hideCompleted()">Hide completed items</button>
+        </div>
+      </div>
+
     </div>
 
     <script src="js/app.js"></script>
